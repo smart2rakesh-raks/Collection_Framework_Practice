@@ -39,7 +39,8 @@ public class CollectionsinSelenium {
             WebElement element = itr.next();
             value=element.getText();
             System.out.println("Element getText: "+value);
-
+            ElementValues.put("Element"+i, value);//store data into HashMap
+            i++;
         }
 
 
