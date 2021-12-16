@@ -2,49 +2,33 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
+
+import java.util.*;
 
 public class CollectionsinSelenium {
 
-    public static void dispHashMapValues(HashMap<String,String> elementValues)
-    {
-        Set<Entry<String, String>> elementsset= elementValues.entrySet();
-        Iterator<Entry<String,String>> Itr= elementsset.iterator();
-        while(Itr.hasNext())
-        {
-            Entry<String,String> entry= Itr.next();
-            System.out.println("Key: "+entry.getKey()+" Value: "+entry.getValue());
-        }
-    }
 
     public static void main(String[] args){
         WebDriver driver = new ChromeDriver();
-        driver.get("https://money.rediff.com/gainers/bse/weekly/groupm");
+        driver.get("https://money.rediff.com/indicators");
         driver.manage().window().maximize();
-        ArrayList<WebElement> Elementlishead = (ArrayList<WebElement>) driver.findElements(By.xpath("//*[@id=\"leftcontainer\"]/table/thead"));
+
+        ArrayList<WebElement> Elementlishead = (ArrayList<WebElement>) driver.findElements(By.xpath("//*[@id=\"leftcontainer\"]/div[4]/table/tbody/tr/td[1]/table/tbody/tr/td/table[1]/tbody/tr[2]/td/table/thead/tr/th"));
         Iterator<WebElement> itrhead = Elementlishead.iterator();
+        System.out.println(itrhead.next().getText());
 
-        List<WebElement> Elementlis = driver.findElements(By.xpath("//*[@id=\"leftcontainer\"]/table/tbody"));
+
+        List<WebElement> Elementlis = driver.findElements(By.xpath("//*[@id=\"leftcontainer\"]/div[4]/table/tbody/tr/td[1]/table/tbody/tr/td/table[1]/tbody/tr[2]/td/table/tbody/tr"));
         Iterator<WebElement> itr = Elementlis.iterator();
+        System.out.println(itr.next().getText());
 
-        String value= "";
-        int i =0;
-        HashMap<String,String> ElementValues = new HashMap<String,String>();
-        while (itr.hasNext()){
-            WebElement element = itr.next();
-            value=element.getText();
-            System.out.println("Element getText: "+value);
-            ElementValues.put("Element"+i, value);//store data into HashMap
-            i++;
+        Map<Integer,String> ElementValues = new HashMap<Integer,String>();
+        int n =1;
+        for( WebElement i: Elementlis) {
+            ElementValues.put(n, i.getText());
+            n++;
         }
-
-
-        dispHashMapValues(ElementValues);
+        System.out.println(ElementValues);
 
         driver.quit();
 
